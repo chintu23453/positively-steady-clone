@@ -1,9 +1,9 @@
 import weaversWorkshop from "@/assets/weavers-workshop.jpg";
-import saraswatiDeity from "@/assets/saraswati-deity.png";
+import goddessSaraswati from "@/assets/goddess-saraswati.png";
 
 const HeritageSection = () => {
   return (
-    <section className="w-full bg-secondary py-16 lg:py-24">
+    <section className="w-full bg-secondary py-16 lg:py-24" id="about">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
@@ -51,9 +51,9 @@ const HeritageSection = () => {
               className="w-full h-64 object-cover rounded-lg shadow-lg"
             />
             <img
-              src={saraswatiDeity}
+              src={goddessSaraswati}
               alt="Goddess Saraswati - patron of arts and crafts"
-              className="w-full h-64 object-cover rounded-lg shadow-lg"
+              className="w-full h-64 object-contain rounded-lg shadow-lg bg-white"
             />
           </div>
         </div>

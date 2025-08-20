@@ -2,6 +2,8 @@ import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
 import HeritageSection from "@/components/HeritageSection";
 import WeaversSection from "@/components/WeaversSection";
+import TextilesSection from "@/components/TextilesSection";
+import ContactSection from "@/components/ContactSection";
 
 const Index = () => {
   return (
@@ -11,6 +13,8 @@ const Index = () => {
         <HeroSection />
         <HeritageSection />
         <WeaversSection />
+        <TextilesSection />
+        <ContactSection />
       </main>
     </div>
   );

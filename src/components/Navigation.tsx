@@ -1,9 +1,33 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Menu, X, Search } from "lucide-react";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsMenuOpen(false);
+  };
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      // Simple search functionality - you can enhance this
+      const searchableText = document.body.innerText.toLowerCase();
+      if (searchableText.includes(searchTerm.toLowerCase())) {
+        alert(`Found "${searchTerm}" on the page!`);
+      } else {
+        alert(`"${searchTerm}" not found on this page.`);
+      }
+    }
+  };
 
   return (
     <nav className="w-full bg-white border-b border-gray-100 sticky top-0 z-50">
@@ -16,40 +40,74 @@ const Navigation = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex space-x-8">
-            <a
-              href="#about"
+            <button
+              onClick={() => scrollToSection('about')}
               className="text-foreground hover:text-primary transition-colors duration-200 font-medium"
             >
               About Us
-            </a>
-            <a
-              href="#weavers"
+            </button>
+            <button
+              onClick={() => scrollToSection('weavers')}
               className="text-foreground hover:text-primary transition-colors duration-200 font-medium"
             >
               Weavers
-            </a>
-            <a
-              href="#textiles"
+            </button>
+            <button
+              onClick={() => scrollToSection('textiles')}
               className="text-foreground hover:text-primary transition-colors duration-200 font-medium"
             >
               Textiles
-            </a>
-            <a
-              href="#contact"
+            </button>
+            <button
+              onClick={() => scrollToSection('contact')}
               className="text-foreground hover:text-primary transition-colors duration-200 font-medium"
             >
               Contact
-            </a>
+            </button>
           </div>
 
-          {/* Desktop Buttons */}
-          <div className="hidden md:flex space-x-4">
-            <Button variant="ghost" size="sm">
-              Search
-            </Button>
-            <Button variant="default" size="sm">
-              Home
-            </Button>
+          {/* Desktop Buttons & Search */}
+          <div className="hidden md:flex items-center space-x-4">
+            {isSearchOpen ? (
+              <form onSubmit={handleSearch} className="flex items-center space-x-2">
+                <Input
+                  type="text"
+                  placeholder="Search..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-48"
+                  autoFocus
+                />
+                <Button type="submit" variant="ghost" size="sm">
+                  <Search className="h-4 w-4" />
+                </Button>
+                <Button 
+                  type="button" 
+                  variant="ghost" 
+                  size="sm"
+                  onClick={() => setIsSearchOpen(false)}
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </form>
+            ) : (
+              <>
+                <Button 
+                  variant="ghost" 
+                  size="sm"
+                  onClick={() => setIsSearchOpen(true)}
+                >
+                  Search
+                </Button>
+                <Button 
+                  variant="default" 
+                  size="sm"
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                >
+                  Home
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -72,41 +130,58 @@ const Navigation = () => {
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t border-gray-100">
             <div className="flex flex-col space-y-4">
-              <a
-                href="#about"
-                className="text-foreground hover:text-primary transition-colors duration-200 font-medium"
-                onClick={() => setIsMenuOpen(false)}
+              <button
+                onClick={() => scrollToSection('about')}
+                className="text-left text-foreground hover:text-primary transition-colors duration-200 font-medium"
               >
                 About Us
-              </a>
-              <a
-                href="#weavers"
-                className="text-foreground hover:text-primary transition-colors duration-200 font-medium"
-                onClick={() => setIsMenuOpen(false)}
+              </button>
+              <button
+                onClick={() => scrollToSection('weavers')}
+                className="text-left text-foreground hover:text-primary transition-colors duration-200 font-medium"
               >
                 Weavers
-              </a>
-              <a
-                href="#textiles"
-                className="text-foreground hover:text-primary transition-colors duration-200 font-medium"
-                onClick={() => setIsMenuOpen(false)}
+              </button>
+              <button
+                onClick={() => scrollToSection('textiles')}
+                className="text-left text-foreground hover:text-primary transition-colors duration-200 font-medium"
               >
                 Textiles
-              </a>
-              <a
-                href="#contact"
-                className="text-foreground hover:text-primary transition-colors duration-200 font-medium"
-                onClick={() => setIsMenuOpen(false)}
+              </button>
+              <button
+                onClick={() => scrollToSection('contact')}
+                className="text-left text-foreground hover:text-primary transition-colors duration-200 font-medium"
               >
                 Contact
-              </a>
-              <div className="flex space-x-4 pt-4">
-                <Button variant="ghost" size="sm">
-                  Search
-                </Button>
-                <Button variant="default" size="sm">
-                  Home
-                </Button>
+              </button>
+              
+              {/* Mobile Search */}
+              <div className="pt-4 border-t border-gray-200">
+                <form onSubmit={handleSearch} className="flex flex-col space-y-2">
+                  <Input
+                    type="text"
+                    placeholder="Search..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                  <div className="flex space-x-2">
+                    <Button type="submit" variant="ghost" size="sm" className="flex-1">
+                      Search
+                    </Button>
+                    <Button 
+                      type="button"
+                      variant="default" 
+                      size="sm" 
+                      className="flex-1"
+                      onClick={() => {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                        setIsMenuOpen(false);
+                      }}
+                    >
+                      Home
+                    </Button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
