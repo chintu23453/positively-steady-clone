@@ -1,5 +1,5 @@
 import weaversWorkshop from "@/assets/weavers-workshop.jpg";
-import goddessSaraswati from "@/assets/goddess-saraswati.png";
+import goddessSaraswati from "@/assets/goddess-saraswati-exact.png";
 
 const HeritageSection = () => {
   return (
